@@ -8,11 +8,16 @@
             <form string="Bug Report">
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="report_type" widget="radio"/>
-                        <field name="priority" widget="radio"/>
-                        <field name="description"/>
-                        <field name="user_id" readonly="1"/>
+                        <field name="name"/> <!-- Nama bug -->
+                        <field name="report_type" widget="radio"/> <!-- Jenis laporan -->
+                        <field name="priority" widget="radio"/> <!-- Prioritas -->
+                        <field name="description"/> <!-- Deskripsi bug -->
+                        <field name="user_id" readonly="1"/> <!-- Pengguna yang melaporkan -->
+                        <field name="status" readonly="1"/> <!-- Status laporan -->
+                    </group>
+                    <group>
+                        <field name="created_date" readonly="1"/> <!-- Tanggal dibuat -->
+                        <field name="updated_date" readonly="1"/> <!-- Tanggal diperbarui -->
                     </group>
                 </sheet>
             </form>
@@ -25,12 +30,33 @@
         <field name="model">bug.report</field>
         <field name="arch" type="xml">
             <tree string="Bug Reports">
-                <field name="name"/>
-                <field name="report_type"/>
-                <field name="priority"/>
-                <field name="user_id"/>
+                <field name="name"/> <!-- Nama bug -->
+                <field name="report_type"/> <!-- Jenis laporan -->
+                <field name="priority"/> <!-- Prioritas -->
+                <field name="status"/> <!-- Status laporan -->
+                <field name="user_id"/> <!-- Pengguna yang melaporkan -->
+                <field name="created_date"/> <!-- Tanggal dibuat -->
             </tree>
         </field>
     </record>
+
+    <!-- Action untuk membuka daftar laporan bug -->
+    <record id="action_bug_report" model="ir.actions.act_window">
+        <field name="name">Bug Reports</field>
+        <field name="res_model">bug.report</field>
+        <field name="view_mode">tree,form</field> <!-- Tampilan tree dan form -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Belum ada laporan bug. Klik "Create" untuk menambahkan laporan baru.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu utama untuk modul -->
+    <menuitem id="menu_bug_report_root" name="Bug Reports" sequence="10"/>
+
+    <!-- Submenu untuk membuka daftar laporan bug -->
+    <menuitem id="menu_bug_report" name="Bug Reports" parent="menu_bug_report_root"
+              action="action_bug_report" sequence="10"/>
 </odoo>
 
